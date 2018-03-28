@@ -5,8 +5,6 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 // TODO: 21.03.2018 create new UserController
@@ -20,8 +18,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RestController
 public class UserController {
-
-    private List<User> userList = new LinkedList<>();
 
     @Autowired
     private UserRepository userRepository;
@@ -44,15 +40,33 @@ public class UserController {
 
     @GetMapping("/findById/{id}")
     public User findById(@PathVariable("id") Long id) {
-
         return userRepository.findById(id).get();
     }
+
+    @GetMapping("/findByEmail/{email}")
+    public User findByEmail(@PathVariable("email") String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @GetMapping("/findByAgeBetween/{from}/{to}")
+    public List<User> findUsersByAgeBetween(@PathVariable("from") int from, @PathVariable("to") int to) {
+        return userRepository.findUserByAgeBetween(from, to);
+    }
+
+    @GetMapping("/findAllByEmail/{email}")
+    public List<User> findAllByEmail(@PathVariable("email") String email) {
+        return userRepository.findAllByEmailOwn(email);
+    }
+
+
+
 
 //    /**
 //     * @param id delete existing users with parameter "id"
 //     */
 //    @GetMapping("/delete/{id}")
-//    public void delete(@PathVariable("id") int id) {
+//    public void delete(@PathVariable("id") long id) {
+//        userRepository.deleteById(id);
 //        Iterator<User> iterator = userList.iterator();
 //        User user;
 //        while (iterator.hasNext()) {
@@ -61,7 +75,7 @@ public class UserController {
 //                iterator.remove();
 //            }
 //        }
-//    }
+}
 //
 //    /**
 //     * @param id update existing user by id
@@ -80,26 +94,6 @@ public class UserController {
 //        }
 //    }
 //
-//    /**
-//     * @param name user's name.
-//     * @param
-//     * @returns created user, add it to userList
-//     */
-//    @GetMapping("/create/{name}/{login}/{password}/{email}/{age}/{id}")
-//    public User create(@PathVariable("name") String name, @PathVariable("login") String login, @PathVariable("password") String password,
-//                       @PathVariable("email") String email, @PathVariable("age") int age, @PathVariable("id") int id) {
-//        User user = new User(name, login, password, email, age, id);
-//        userList.add(user);
-//        return user;
-//    }
-//
-//    /**
-//     * @return all users
-//     */
-//    @GetMapping("/findAll")
-//    public List<User> findAllAll() {
-//        return userList;
-//    }
 //
 //    /**
 //     * @param name
@@ -214,4 +208,4 @@ public class UserController {
 //        }
 //        return resultList;
 //    }
-}
+

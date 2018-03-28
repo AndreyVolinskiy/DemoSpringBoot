@@ -17,6 +17,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private long id;
     @Column(name = "name")
     private String name;
     @Column(name = "login")
@@ -25,10 +29,6 @@ public class User {
     private String password;
     @Column(name = "email")
     private String email;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
     @Column(name = "age")
     private int age;
 
