@@ -14,12 +14,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByName(String name);
 
+    List<User> findAllByLogin(String login);
+
     User findByEmail(String email);
 
     List<User> findAllByEmailAndAgeAndNameAndPassword(String email, int age, String name, String password);
 
     @Query(value = "select * from users WHERE age BETWEEN ?1 AND ?2;", nativeQuery = true)
-    List<User> findUserByAgeBetween(int from, int to);
+    List<User> findUserInAgeBetween(int from, int to);
 
     @Query(value = "SELECT * FROM users WHERE email = :userEmail", nativeQuery = true)
     List<User> findAllByEmailOwn(@Param("userEmail") String email);

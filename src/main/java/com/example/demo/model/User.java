@@ -31,12 +31,21 @@ public class User {
     private String email;
     @Column(name = "age")
     private int age;
+    @Column(name = "add_date")
+    private String date;
+    @Column(name = "organization_id")
+    private Long organizationId;
 
-    public User(String name, String login, String password, String email, int age) {
+    // TODO: 28.03.2018 create user dto (- password - orgId + String OrgName)
+    // TODO: 28.03.2018 correct user service limit offset
+    // TODO: 28.03.2018 the same to event model (service) limit offset
+
+    public User(String name, String login, String password, String email, int age, Long organizationId) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
         this.age = age;
+        this.organizationId = organizationId;
     }
 }
