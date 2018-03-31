@@ -1,11 +1,14 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.model.Person;
 import com.example.demo.model.User;
 import com.example.demo.repository.OrganizationRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -69,8 +72,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> findAll() {
-        return listMappingToUserDTO(userRepository.findAll());
+    public List<UserDTO> findAll(int limit, int offset) {
+        Page<User> list = userRepository.findAll(PageRequest.of(offset, limit));
+        System.out.println(limit);
+        System.out.println(offset);
+        List<UserDTO> userDTOList = new LinkedList<>();
+        list.map(s -> userDTOList.add(mappingToUserDto(s)));
+        return userDTOList;
     }
 
     @Override

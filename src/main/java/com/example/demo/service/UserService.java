@@ -24,7 +24,7 @@ public interface UserService {
 
     UserDTO findOne(Long id);
 
-    List<UserDTO> findAll();
+    List<UserDTO> findAll(int limit, int offset);
 
     void delete(Long id);
 }

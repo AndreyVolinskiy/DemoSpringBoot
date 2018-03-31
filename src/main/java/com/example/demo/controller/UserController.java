@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @GetMapping("/findAll")
-    public List<UserDTO> findAll() {
-        return userService.findAll();
+    public List<UserDTO> findAll(@RequestParam int limit, @RequestParam int offset) {
+        return userService.findAll(limit, offset);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -58,7 +58,7 @@ public class UserController {
     @GetMapping("/update/{name}/{login}/{password}/{email}/{age}/{id}")
     public void update(@PathVariable("name") String name, @PathVariable("login") String login, @PathVariable("password") String password,
                        @PathVariable("email") String email, @PathVariable("age") int age, @PathVariable("id") int id) {
-        List<UserDTO> userList = userService.findAll();
+        List<UserDTO> userList = userService.findAll(100, 0);
         for (UserDTO elem : userList) {
             if (elem.getId() == id) {
                 elem.setName(name);
