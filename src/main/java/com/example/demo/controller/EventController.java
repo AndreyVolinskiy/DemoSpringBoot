@@ -1,47 +1,44 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Event;
-import com.example.demo.repository.EventRepository;
+import com.example.demo.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * @author Andrey Volinskiy on 21.03.2018.
  */
-@RequestMapping("/api/events")
+@RequestMapping("/api/event")
 @RestController
 public class EventController {
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
 
     /**
      * @return element by id
      */
-    @GetMapping("/findOne/{index}")
-    public Event findOneById(@PathVariable("index") long id) {
-        return eventRepository.findById(id).get();
+    @GetMapping("/findOne/{id}")
+    public Event findOneById(@PathVariable("id") long id) {
+        return eventService.findOneById(id);
     }
 
     /**
      * @return list of all events
      */
     @GetMapping("/findAll")
-    public List<Event> findAll() {
-        return eventRepository.findAll();
+    public List<Event> findAll(@RequestParam int limit, @RequestParam int offset) {
+        return eventService.findAll(limit, offset);
     }
 
      /**
      * @return list of events founded by parameter "name"
      */
     @GetMapping("/findAllByName/{name}")
-    public List<Event> findAllByName(@PathVariable("name") String name) {
-        return eventRepository.findAllByName(name);
+    public List<Event> findAllByName(@PathVariable("name") String name, @RequestParam int limit, @RequestParam int offset) {
+        return eventService.findAllByName(name, limit, offset);
     }
 
     /**
@@ -49,6 +46,6 @@ public class EventController {
      */
     @GetMapping("/create/{name}")
     public Event create(@PathVariable("name") String name) {
-        return eventRepository.save(new Event(name));
+        return eventService.create(name);
     }
 }
